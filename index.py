@@ -49,11 +49,25 @@ def Czesc2():
     'wynik z matmy ponad srednia',
     'wynik z matmy ponizej sredniej')
 
-    print(df.head())
+
+def Czesc3():
+    maleSredniaLista = df.loc[df['gender'] == 'male', 'math score'].tolist()
+    print("\n-sredni wynik mezczyzn z matematyki:\n",sum(maleSredniaLista)/len(maleSredniaLista))
+
+    femaleSredniaLista = df.loc[df['gender'] == 'female', 'math score'].tolist()
+    print("\n-sredni wynik kobiet z matematyki:\n",sum(femaleSredniaLista)/len(femaleSredniaLista))
+
+    df['SredniaWynikow'] = df[['math score', 'reading score', 'writing score']].mean(axis=1)
+    
+    poKursieLista = df.loc[df['test preparation course'] == 'completed', 'SredniaWynikow'].tolist()
+    print("\n-po kursie srednia:\n",sum(poKursieLista)/len(poKursieLista))
+
+    bezKursuLista = df.loc[df['test preparation course'] == 'none', 'SredniaWynikow'].tolist()
+    print("\n-bez kursu srednia:\n",sum(bezKursuLista)/len(bezKursuLista))
 
 
 
 
 
 
-Czesc2()
+Czesc3()
