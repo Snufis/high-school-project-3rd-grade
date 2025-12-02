@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('StudentsPerformance.csv')
+df['sredni wynik'] = df[['math score', 'reading score', 'writing score']].mean(axis=1)
 
 def Czesc1():
     print("\n-pierwsze wiersze tabeli:\n",df.head())
@@ -41,9 +43,7 @@ def Czesc2():
     wynik2 = df[(df['gender'] == 'female') & (df['reading score'] > 70)]
     print("\n-kobiety z wynikiem z czytania wiekszym od 70:\n",wynik2)
 
-    df['sredni wynik'] = df[['math score', 'reading score', 'writing score']].mean(axis=1)
 
-    
     df['matma vs srednia'] = np.where(
     df['math score'] > df['math score'].mean(),
     'wynik z matmy ponad srednia',
@@ -51,23 +51,28 @@ def Czesc2():
 
 
 def Czesc3():
-    maleSredniaLista = df.loc[df['gender'] == 'male', 'math score'].tolist()
-    print("\n-sredni wynik mezczyzn z matematyki:\n",sum(maleSredniaLista)/len(maleSredniaLista))
+    print("\n-porownanie wyników z matmy na podstawie płci:\n",df.groupby('gender')['math score'].mean())
+    print("\n-porównanie średniej na podstawie kursu:\n",df.groupby('test preparation course')['sredni wynik'].mean())
 
-    femaleSredniaLista = df.loc[df['gender'] == 'female', 'math score'].tolist()
-    print("\n-sredni wynik kobiet z matematyki:\n",sum(femaleSredniaLista)/len(femaleSredniaLista))
 
-    df['SredniaWynikow'] = df[['math score', 'reading score', 'writing score']].mean(axis=1)
+def Czesc4():
+    df['reading score'].hist(bins=20)
+    plt.xlabel('Wynik z czytania')
+    plt.ylabel('Liczba studentów')
+    plt.title('Histogram wyników z czytania')
+    plt.savefig("reading_score_histogram.png")
+
+    plt.boxplot([df['math score'], df['writing score'], df['reading score']], labels=['Math Score', 'Writing Score', 'Reading Score'])
+    plt.ylabel('Wyniki')
+    plt.title('Boxplot wyników z matmy, pisania i czytania')
+    plt.savefig("scores_boxplot.png")
+
     
-    poKursieLista = df.loc[df['test preparation course'] == 'completed', 'SredniaWynikow'].tolist()
-    print("\n-po kursie srednia:\n",sum(poKursieLista)/len(poKursieLista))
-
-    bezKursuLista = df.loc[df['test preparation course'] == 'none', 'SredniaWynikow'].tolist()
-    print("\n-bez kursu srednia:\n",sum(bezKursuLista)/len(bezKursuLista))
 
 
 
 
 
 
-Czesc3()
+Czesc4()
+
