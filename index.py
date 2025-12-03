@@ -55,18 +55,25 @@ def Czesc3():
     print("\n-porównanie średniej na podstawie kursu:\n",df.groupby('test preparation course')['sredni wynik'].mean())
 
 
+
 def Czesc4():
     df['reading score'].hist(bins=20)
     plt.xlabel('Wynik z czytania')
     plt.ylabel('Liczba studentów')
     plt.title('Histogram wyników z czytania')
-    plt.savefig("reading_score_histogram.png")
+    plt.show()
 
     plt.boxplot([df['math score'], df['writing score'], df['reading score']], labels=['Math Score', 'Writing Score', 'Reading Score'])
     plt.ylabel('Wyniki')
     plt.title('Boxplot wyników z matmy, pisania i czytania')
-    plt.savefig("scores_boxplot.png")
+    plt.show()
 
+    for column in ['math score', 'reading score', 'writing score']:
+        plt.scatter(df.index, df[column], alpha=0.5)
+        plt.xlabel('Indeks studenta')
+        plt.ylabel(column)
+        plt.title(f'Scatter plot wyników z {column}')
+        plt.show()
     
 
 
