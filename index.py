@@ -63,23 +63,31 @@ def Czesc4():
     plt.title('Histogram wyników z czytania')
     plt.show()
 
-    #plt.boxplot([df['math score'], df['writing score'], df['reading score']], labels=['Math Score', 'Writing Score', 'Reading Score'])
-    #plt.ylabel('Wyniki')
-    #plt.title('Boxplot wyników z matmy, pisania i czytania')
-   #plt.show()
+    plt.boxplot([df['math score'], df['writing score'], df['reading score']], labels=['Math Score', 'Writing Score', 'Reading Score'])
+    plt.ylabel('Wyniki')
+    plt.title('Boxplot wyników z matmy, pisania i czytania')
+    plt.show()
 
-    #for column in ['math score', 'reading score', 'writing score']:
-        #plt.scatter(df.index, df[column], alpha=0.5)
-        #plt.xlabel('Indeks studenta')
-        #plt.ylabel(column)
-        #plt.title(f'Scatter plot wyników z {column}')
-        #plt.show()
+    for column in ['math score', 'reading score', 'writing score']:
+        plt.scatter(df.index, df[column], alpha=0.5)
+        plt.xlabel('Indeks studenta')
+        plt.ylabel(column)
+        plt.title(f'Scatter plot wyników z {column}')
+        plt.show()
+
+def Czesc5():
+        print("\n-grupy które miały najlepsze srednie wyniki:\n",df.groupby('race/ethnicity')['sredni wynik'].mean().sort_values(ascending=False))
+        print("\n-korelacja miedzy wynikami osob po kursie przygotowawczym vs bez:\n",df.groupby('test preparation course')['sredni wynik'].mean())
+
+        
     
 
+    
+Czesc5()
 
 
 
 
 
-Czesc4()
+
 
