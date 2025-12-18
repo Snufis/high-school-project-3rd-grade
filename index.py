@@ -106,7 +106,11 @@ def Czesc5():
 
 
     
-print(df.describe())
+Czesc1()
+Czesc2()
+Czesc3()
+Czesc4()
+Czesc5()
 
 
 
