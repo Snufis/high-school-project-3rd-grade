@@ -1,6 +1,4 @@
-Twoim zadaniem jest przeprowadzić analizę danych dotyczących wyników uczniów z trzech przedmiotów: matematyki, czytania i pisania. Do realizacji projektu wykorzystasz bibliotekę pandas oraz matplotlib.
-
-Dane znajdują się pod linkiem: https://liblink.pl/bdklDYUfmk , należy je pobrać.
+Dane znajdują się pod linkiem: https://liblink.pl/bdklDYUfmk
 
 Część I
 Wczytaj plik z danymi do programu (pd.read_csv())
@@ -49,6 +47,3 @@ Czy udział w kursie przygotowawczym wpływa na wyniki?
 Jakie są dwa-trzy najważniejsze wnioski z całej analizy?
 
 
-Projekt możesz oddać np. przesyłając mi link do colab
-
-W razie pytań do treści projektu to polecam pisać maile lub w szkole mnie szukać
