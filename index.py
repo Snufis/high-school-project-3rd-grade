@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+import os
+os.makedirs("wykresy", exist_ok=True)
+plt.rcParams['savefig.dpi'] = 300
+
+
 
 df = pd.read_csv('StudentsPerformance.csv')
 df['sredni wynik'] = df[['math score', 'reading score', 'writing score']].mean(axis=1)
@@ -51,30 +57,45 @@ def Czesc3():
 
 
 def Czesc4():
-    plt.hist(df['reading score'], bins=20, color='skyblue')
+    plt.figure()
+    plt.hist(df['reading score'], bins=20, color='skyblue', edgecolor='black')
     plt.xlabel('Wynik z czytania')
     plt.ylabel('Liczba uczniów')
     plt.title('Histogram wyników z czytania')
-    plt.show()
+    plt.savefig("wykresy/histogram_reading.png")
+    plt.close()
 
+
+    plt.figure()
     plt.boxplot(
         [df['math score'], df['reading score'], df['writing score']],
-        labels=['Matematyka', 'Czytanie', 'Pisanie']
+        tick_labels=['Matematyka', 'Czytanie', 'Pisanie'],
+        patch_artist=True,
+        boxprops=dict(facecolor='lightgreen')
     )
     plt.ylabel('Wynik')
     plt.title('Porównanie wyników z trzech przedmiotów')
-    plt.show()
+    plt.savefig("wykresy/boxplot_subjects.png")
+    plt.close()
 
+
+    plt.figure()
     df.groupby('gender')['sredni wynik'].mean().plot(kind='bar', color='orange')
     plt.ylabel('Średni wynik')
     plt.title('Średni wynik a płeć')
-    plt.show()
+    plt.savefig("wykresy/bar_gender.png")
+    plt.close()
 
-    df.groupby('test preparation course')['sredni wynik'].mean().plot(kind='bar', color='green')
+
+    plt.figure()
+    ax = df.groupby('test preparation course')['sredni wynik'].mean().plot(kind='bar', color='green')
     plt.ylabel('Średni wynik')
     plt.title('Średni wynik a kurs przygotowawczy')
-    plt.show()
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=0)
+    plt.savefig("wykresy/bar_course.png")
+    plt.close()
 
+    plt.figure()
     plt.scatter(
         df['math score'],
         df['reading score'],
@@ -86,9 +107,8 @@ def Czesc4():
     plt.ylabel('Czytanie')
     plt.title('Zależność: matematyka vs czytanie')
     plt.colorbar(label='Wynik z matematyki')
-    plt.show()
-
-    
+    plt.savefig("wykresy/scatter_math_reading.png")
+    plt.close()
 
     
 
@@ -96,12 +116,12 @@ def Czesc4():
 
 def Czesc5():
         print("\n-wnioski:\n")
-        print("\n-grupy które miały najlepsze srednie wyniki:\n",df.groupby('race/ethnicity')['sredni wynik'].mean().sort_values(ascending=False))
-        print("\n-korelacja miedzy wynikami osob po kursie przygotowawczym vs bez:\n",df.groupby('test preparation course')['sredni wynik'].mean())
+        print("\n-1.grupy które miały najlepsze srednie wyniki:\n",df.groupby('race/ethnicity')['sredni wynik'].mean().sort_values(ascending=False))
+        print("\n-2.korelacja miedzy wynikami osob po kursie przygotowawczym vs bez:\n",df.groupby('test preparation course')['sredni wynik'].mean())
 
-        print("1.Kurs przygotowawczy ma pozytywny wpływ na średnie wyniki studentów.")
-        print("2.Grupy etniczne różnią się pod względem średnich wyników")
-        print("3.Kobiety mają przeciętnie wyższe wyniki z czytania i pisania niż mężczyźni.")
+        print("3.Kurs przygotowawczy ma pozytywny wpływ na średnie wyniki studentów.")
+        print("4.Grupy etniczne różnią się pod względem średnich wyników")
+        print("5.Kobiety mają przeciętnie wyższe wyniki z czytania i pisania niż mężczyźni.")
 
 
 
