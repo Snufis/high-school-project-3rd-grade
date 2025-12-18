@@ -13,7 +13,7 @@ def Czesc1():
     print("\n-typy danych:\n",df.dtypes)
 
     print("\n-srednia:\n",df.mean(numeric_only=True))
-    print("\n-mediana:\n",df.median(numeric_only=True))
+    print("\n-mediana:\n",df.median(numeric_only=True)) #
     print("\n-min:\n",df.min(numeric_only=True))
     print("\n-max:\n",df.max(numeric_only=True))
     print("\n-wariancja:\n",df.var(numeric_only=True))
@@ -24,13 +24,7 @@ def Czesc1():
     print("\n-najczesciej wystepująca wartość:\n",df.mode())
     print("\n-korelacja:\n",df.corr(numeric_only=True))
 
-    a = df.isnull().values.any()
-
-    if a == True:
-        print("\n-Puste miejsca w tabeli: sa")
-
-    else:
-        print("\n-Puste miejsca w tabeli: nie ma")
+    print("\nBraki danych:\n",df.isnull().any().any())
 
 
 def Czesc2():
@@ -57,33 +51,63 @@ def Czesc3():
 
 
 def Czesc4():
-    df['reading score'].hist(bins=20)
+    plt.hist(df['reading score'], bins=20, color='skyblue')
     plt.xlabel('Wynik z czytania')
-    plt.ylabel('Liczba studentów')
+    plt.ylabel('Liczba uczniów')
     plt.title('Histogram wyników z czytania')
     plt.show()
 
-    plt.boxplot([df['math score'], df['writing score'], df['reading score']], labels=['Math Score', 'Writing Score', 'Reading Score'])
-    plt.ylabel('Wyniki')
-    plt.title('Boxplot wyników z matmy, pisania i czytania')
+    plt.boxplot(
+        [df['math score'], df['reading score'], df['writing score']],
+        labels=['Matematyka', 'Czytanie', 'Pisanie']
+    )
+    plt.ylabel('Wynik')
+    plt.title('Porównanie wyników z trzech przedmiotów')
     plt.show()
 
-    for column in ['math score', 'reading score', 'writing score']:
-        plt.scatter(df.index, df[column], alpha=0.5)
-        plt.xlabel('Indeks studenta')
-        plt.ylabel(column)
-        plt.title(f'Scatter plot wyników z {column}')
-        plt.show()
+    df.groupby('gender')['sredni wynik'].mean().plot(kind='bar', color='orange')
+    plt.ylabel('Średni wynik')
+    plt.title('Średni wynik a płeć')
+    plt.show()
+
+    df.groupby('test preparation course')['sredni wynik'].mean().plot(kind='bar', color='green')
+    plt.ylabel('Średni wynik')
+    plt.title('Średni wynik a kurs przygotowawczy')
+    plt.show()
+
+    plt.scatter(
+        df['math score'],
+        df['reading score'],
+        alpha=0.5,
+        c=df['math score'],
+        cmap='viridis'
+    )
+    plt.xlabel('Matematyka')
+    plt.ylabel('Czytanie')
+    plt.title('Zależność: matematyka vs czytanie')
+    plt.colorbar(label='Wynik z matematyki')
+    plt.show()
+
+    
+
+    
+
+
 
 def Czesc5():
+        print("\n-wnioski:\n")
         print("\n-grupy które miały najlepsze srednie wyniki:\n",df.groupby('race/ethnicity')['sredni wynik'].mean().sort_values(ascending=False))
         print("\n-korelacja miedzy wynikami osob po kursie przygotowawczym vs bez:\n",df.groupby('test preparation course')['sredni wynik'].mean())
 
-        
-    
+        print("1.Kurs przygotowawczy ma pozytywny wpływ na średnie wyniki studentów.")
+        print("2.Grupy etniczne różnią się pod względem średnich wyników")
+        print("3.Kobiety mają przeciętnie wyższe wyniki z czytania i pisania niż mężczyźni.")
+
+
 
     
-Czesc5()
+print(df.describe())
+
 
 
 
